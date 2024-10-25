@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body > * {
+    border: 1px solid black;
+}
+
+header {
+    height: 20vh;
+}
+
+main,
+menu {
+    width: 50%;
+    height: 50vh;
+    float: 0;
+    float: left;
+}
+
+footer {
+    height: 30vh;
+    clear: both;
+}

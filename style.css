@@ -1,26 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
-    box-sizing: border-box;
+    font-family: "Roboto Condensed", sans-serif;
     margin: 0;
     padding: 0;
-}
-
-body > * {
-    border: 1px solid black;
+    font-family: "Rubik Wet Paint", system-ui;
+    font-weight: 900;
+    font-style: italic;
 }
 
 header {
-    height: 20vh;
+    height: 100px;
+    padding: 1% 0;
 }
 
-main,
-menu {
-    width: 50%;
-    height: 50vh;
-    float: 0;
-    float: left;
+header img {
+    width: 15%;
+}
+
+h1 {
+    margin-top: 4%;
+    text-align: center;
+    font-size: 40px;
+}
+
+article {
+    margin: 4% 2% 0;
+}
+
+h2 {
+    text-align: center;
+    font-size: 30px;
+}
+
+p {
+    font-family: sans-serif;
+    margin: 3% 0 1%;
+    font-size: 17px;
+    width: 75%;
+    font-style: normal;
+    font-weight: 400;
+}
+
+article img {
+    width: 30%;
+}
+
+hr {
+    margin: 4% auto 0;
+    height: 25px;
+    width:77%;
+    background-image: url("https://www.svgrepo.com/show/342320/ubisoft.svg");
+    background-size: contain;
+    background-repeat: repeat-x;
+    background-position: center;
+    background-color: transparent;
+    border: none;
 }
 
 footer {
-    height: 30vh;
-    clear: both;
+    width: 100%;
+    height: 250px;
+    margin-top: 4%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid black;
+}
+
+h4 {
+    font-size: 44px;
 }

@@ -1,6 +1,6 @@
 operation = input("Inserire l'operazione da eseguire (+ - * /): ")
-a = input("Inserire il primo numero: ")
-b = input("Inserire il secondo numero: ")
+a = float(input("Inserire il primo numero: "))
+b = float(input("Inserire il secondo numero: "))
 
 if operation == "+":
     result = a + b
@@ -13,4 +13,4 @@ elif operation == "/":
 else:
     result = "ERRORE, riprovare"
 
-print("Il risultato dell'operazione e' ")
+print("Il risultato dell'operazione e'", result)

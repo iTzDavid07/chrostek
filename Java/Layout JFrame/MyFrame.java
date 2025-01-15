@@ -17,7 +17,7 @@ public class MyFrame extends JFrame {
         Container c = this.getContentPane();
 
         Panel p1 = new Panel();
-        p1.setLayout(new GridLayout(2, 2, 5, 5));
+        p1.setLayout(new GridLayout(2, 2, 0, 5));
         p1.add(new Label("Prezzo"));
         textField1.setBackground(Color.yellow);
         p1.add(textField1);
@@ -30,6 +30,7 @@ public class MyFrame extends JFrame {
 
         setSize(500,600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
     }
 }

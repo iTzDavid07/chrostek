@@ -1,11 +1,12 @@
 import pygame
 
-screen_size = (1800, 1000)
+screen_size = (1800, 900)
 
 pygame.init()
 screen = pygame.display.set_mode(screen_size)
 pygame.display.set_caption("Plinko")
 clock = pygame.time.Clock()
+FPS = 60
 running = True
 
 
@@ -49,15 +50,16 @@ for i in range(circles_number - circles_offset):
             
             pygame.draw.circle(screen, "White", (circle_xpos, circles_ypos), circles_radius)
 
+ball_speed = 10 / FPS
+ball = pygame.draw.circle(screen, "Blue", (circles_xstart, 50), circles_radius * 2)
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    # RENDER YOUR GAME HERE
-
 
     pygame.display.update()
-    clock.tick(60)
+    clock.tick(FPS)
 
 pygame.quit()

@@ -50,7 +50,7 @@ for i in range(circles_number - circles_offset):
             
             pygame.draw.circle(screen, "White", (circle_xpos, circles_ypos), circles_radius)
 
-ball_speed = 10 / FPS
+ball_speed = 30 / FPS
 ball = pygame.draw.circle(screen, "Blue", (circles_xstart, 50), circles_radius * 2)
 
 while running:
@@ -58,6 +58,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+    ball.y += ball_speed
 
     pygame.display.update()
     clock.tick(FPS)

@@ -1,11 +1,12 @@
-import pygame
+import pygame, random, math
 
-def draw_grid():
+def create_grid():
+    white_circles = []
     for i in range(circles_number - circles_offset):
         circles_ypos = circles_ystart + (circles_margin * i)
 
         if i % 2 == 0:
-            pygame.draw.circle(screen, "White", (circles_xstart, circles_ypos), circles_radius)
+            white_circles.append(pygame.Rect(circles_xstart - circles_radius, circles_ypos - circles_radius, circles_radius * 2, circles_radius * 2))
 
             for j in range(1, i + 1 + circles_offset):
                 circles_one_side = (i + circles_offset) / 2
@@ -14,7 +15,7 @@ def draw_grid():
                 else:
                     circle_xpos = circles_xstart + (circles_margin * (j - circles_one_side))
 
-                pygame.draw.circle(screen, "White", (circle_xpos, circles_ypos), circles_radius)
+                white_circles.append(pygame.Rect(circle_xpos - circles_radius, circles_ypos - circles_radius, circles_radius * 2, circles_radius * 2))
         else:
             circles_xmargin = circles_margin / 2
             for j in range(1, i + 2 + circles_offset):
@@ -30,7 +31,13 @@ def draw_grid():
                     else:
                         circle_xpos = circles_xstart + (circles_margin * (j - circles_one_side)) - circles_xmargin
 
-                pygame.draw.circle(screen, "White", (circle_xpos, circles_ypos), circles_radius)
+                white_circles.append(pygame.Rect(circle_xpos - circles_radius, circles_ypos - circles_radius, circles_radius * 2, circles_radius * 2))
+    
+    return white_circles
+
+def draw_grid(white_circles):
+    for circle in white_circles:
+        pygame.draw.circle(screen, "White", circle.center, circles_radius)
 
 screen_size = (1800, 900)
 
@@ -45,32 +52,68 @@ running = True
 circles_radius = 7
 circles_number = 18
 circles_offset = 2
-
 circles_xstart = screen_size[0]/2
 circles_ystart = 100
 
 circles_margin = circles_radius * 6
 
-draw_grid()
+class Ball:
+    balls = []
+    timeout = 0
 
-ball_radius = circles_radius * 1.5
-ball_diameter = ball_radius * 2
-ball_x = circles_xstart - ball_radius
-ball_y = 50 - ball_radius
-ball_speed = 100 / FPS
+    def __init__(self):
+        self.radius = circles_radius * 1.5
+        self.x = circles_xstart
+        self.y = 50
+        self.diameter = self.radius * 2
+        self.speed = 100 / FPS
 
-ball_rect = pygame.Rect(ball_x, ball_y, ball_diameter, ball_diameter)
+        Ball.balls.append(self)
+        Ball.timeout = 0
+
+    def collide(self, circle):
+        if math.hypot(self.x - circle.centerx, self.y - circle.centery) <= self.radius + circles_radius:
+            return True
+        else:
+            return False
+
+    def update(self):
+        self.y += self.speed
+
+        for circle in white_circles:
+            if self.collide(circle):
+                if random.randint(0,1):
+                    self.x -= self.diameter
+                else:
+                    self.x += self.diameter
+                break
+
+        pygame.draw.circle(screen, "Blue", (self.x, self.y), self.radius)
+    
+    def destroy(self):
+        Ball.balls.remove(self)
+
+white_circles = create_grid()
 
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_b and Ball.timeout > 0.2:
+                ball = Ball()
+            
+    for ball in Ball.balls:
+        if ball.y > 770:
+            ball.destroy()
 
     screen.fill((0,0,0))
-    draw_grid()
-
-    ball_rect.y += ball_speed
-    pygame.draw.ellipse(screen, "Blue", ball_rect)
+    draw_grid(white_circles)
+    
+    for ball in Ball.balls:
+        ball.update()
+    
+    Ball.timeout += 1 / FPS
 
     pygame.display.update()
     clock.tick(FPS)

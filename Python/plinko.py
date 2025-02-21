@@ -1,5 +1,6 @@
 import pygame, random, math
 
+# Grid
 def create_grid():
     white_circles = []
     for i in range(circles_number - circles_offset):
@@ -39,6 +40,7 @@ def draw_grid(white_circles):
     for circle in white_circles:
         pygame.draw.circle(screen, "White", circle.center, circles_radius)
 
+# Init
 screen_size = (1800, 900)
 
 pygame.init()
@@ -57,6 +59,7 @@ circles_ystart = 100
 
 circles_margin = circles_radius * 6
 
+# Class Ball
 class Ball:
     balls = []
     timeout = 0
@@ -76,16 +79,24 @@ class Ball:
             return True
         else:
             return False
+        
+    def get_random_movement(self):
+        center = screen_size[0] / 2
+        bias = 0.65
+
+        if self.x < center:
+            return -self.diameter if random.random() < bias else self.diameter
+        elif self.x > center:
+            return self.diameter if random.random() < bias else -self.diameter
+        else:
+            return -self.diameter if random.gauss(0, 1) < 0 else self.diameter
 
     def update(self):
         self.y += self.speed
 
         for circle in white_circles:
             if self.collide(circle):
-                if random.randint(0,1):
-                    self.x -= self.diameter
-                else:
-                    self.x += self.diameter
+                self.x += self.get_random_movement()
                 break
 
         pygame.draw.circle(screen, "Blue", (self.x, self.y), self.radius)
@@ -93,6 +104,7 @@ class Ball:
     def destroy(self):
         Ball.balls.remove(self)
 
+# Game
 white_circles = create_grid()
 
 while running:

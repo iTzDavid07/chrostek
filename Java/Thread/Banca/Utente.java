@@ -7,19 +7,22 @@ public class Utente extends Thread {
     }
 
     private void preleva(double quota) {
-        System.out.println(getName() + " sta tentando di prelevare");
         conto.preleva(quota);
-        System.out.println(getName() + " ha finito di prelevare");
+        System.out.println(getName() + " ha prelevato");
     }
 
     private void deposita(double quota) {
-        System.out.println(getName() + " sta tentando di depositare");
         conto.deposita(quota);
-        System.out.println(getName() + " ha finito di depositare");
+        System.out.println(getName() + " ha depositato");
     }
 
     public void run() {
-        deposita(600);
-        preleva(200);
+        try {
+            deposita(600);
+            Thread.sleep(1000);
+            preleva(200);
+        } catch (InterruptedException e) {
+            System.out.println(getName() + " ha riscontrato un errore!");
+        }
     }
 }

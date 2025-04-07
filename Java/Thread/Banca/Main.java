@@ -8,13 +8,5 @@ public class Main {
         u1.start();
         u2.start();
         u3.start();
-
-        try {
-            u1.join();
-            u2.join();
-            u3.join();
-        } catch (InterruptedException e) {
-            System.out.println("Errore");
-        }
     }
 }

@@ -19,10 +19,10 @@ public class Utente extends Thread {
     public void run() {
         try {
             deposita(600);
-            Thread.sleep(1000);
+            Thread.sleep(5000);
             preleva(200);
         } catch (InterruptedException e) {
-            System.out.println(getName() + " ha riscontrato un errore!");
+            System.out.println("Operazione fallita");
         }
     }
 }
